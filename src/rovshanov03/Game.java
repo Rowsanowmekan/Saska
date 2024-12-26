@@ -44,25 +44,6 @@ public class Game extends JPanel {
         });
     }
 
-    private void checkWinner() {
-        // Определяем, у кого сейчас ход
-        Piece opponent = whiteTurn ? Piece.BLACK : Piece.WHITE;
-
-        // Проверяем, остались ли ходы у противника
-        if (board.hasNoMoves(opponent)) {
-            String winner = whiteTurn ? "Белые" : "Черные";
-            JOptionPane.showMessageDialog(this, "Игра окончена! Победили " + winner + "!",
-                    "Победа", JOptionPane.INFORMATION_MESSAGE);
-            disableBoard(); // Делаем доску неактивной
-        }
-    }
-
-    // Метод для отключения доски после завершения игры
-    private void disableBoard() {
-        // Убираем MouseListener для блокировки дальнейших ходов
-        this.removeMouseListener(this.getMouseListeners()[0]);
-        repaint();
-    }
 
     // Проверка, можно ли выбрать данную шашку
     private boolean isPlayerPiece(int row, int col) {

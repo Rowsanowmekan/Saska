@@ -13,21 +13,6 @@ public class Board {
         initializeBoard();
     }
 
-    /**
-     * Проверка победителя на основе отсутствия ходов у одного из игроков.
-     */
-    public String checkWinner() {
-        if (hasNoMoves(Piece.BLACK)) {
-            return "White"; // Черные не могут ходить - победа белых
-        } else if (hasNoMoves(Piece.WHITE)) {
-            return "Black"; // Белые не могут ходить - победа черных
-        }
-        return "None"; // Игра продолжается
-    }
-
-    public Piece[][] getBoard() {
-        return board;
-    }
 
     /**
      * Инициализация доски шашками в начальном расположении.
@@ -127,31 +112,7 @@ public class Board {
         return false;
     }
 
-    /**
-     * Логика хода для дамки.
-     */
-    private boolean isValidKingMove(int fromRow, int fromCol, int toRow, int toCol, Piece player) {
-        int rowDiff = Math.abs(toRow - fromRow);
-        int colDiff = Math.abs(toCol - fromCol);
-        if (rowDiff != colDiff) return false; // Ход не по диагонали
 
-        int rowStep = (toRow > fromRow) ? 1 : -1;
-        int colStep = (toCol > fromCol) ? 1 : -1;
-
-        int currentRow = fromRow + rowStep;
-        int currentCol = fromCol + colStep;
-        boolean captured = false;
-
-        while (currentRow != toRow) {
-            if (board[currentRow][currentCol] != Piece.EMPTY) {
-                if (!isOpponent(player, board[currentRow][currentCol]) || captured) return false; // Захват уже был
-                captured = true;
-            }
-            currentRow += rowStep;
-            currentCol += colStep;
-        }
-        return true;
-    }
 
     /**
      * Перемещение шашки с обработкой захвата и превращением в дамку.
@@ -168,9 +129,6 @@ public class Board {
             board[midRow][midCol] = Piece.EMPTY;
         }
 
-        // Превращение в дамку
-        if (piece == Piece.WHITE && toRow == 0) board[toRow][toCol] = Piece.WHITE_KING;
-        if (piece == Piece.BLACK && toRow == 7) board[toRow][toCol] = Piece.BLACK_KING;
     }
 
     /**
